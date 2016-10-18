@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\wke\icuwin.cpp" />
+    <ClCompile Include="..\wke\jsBind.cpp" />
+    <ClCompile Include="..\wke\wke.cpp" />
+    <ClCompile Include="..\wke\wkeChromeClient.cpp" />
+    <ClCompile Include="..\wke\wkeContextMenuClient.cpp" />
+    <ClCompile Include="..\wke\wkeDebug.cpp" />
+    <ClCompile Include="..\wke\wkeDragClient.cpp" />
+    <ClCompile Include="..\wke\wkeEditorClient.cpp" />
+    <ClCompile Include="..\wke\wkeFrameLoaderClient.cpp" />
+    <ClCompile Include="..\wke\wkeInspectorClient.cpp" />
+    <ClCompile Include="..\wke\wkePlatformStrategies.cpp" />
+    <ClCompile Include="..\wke\wkePopupMenu.cpp" />
+    <ClCompile Include="..\wke\wkeString.cpp" />
+    <ClCompile Include="..\wke\wkeWebView.cpp" />
+    <ClCompile Include="..\wke\wkeWebWindow.cpp" />
+    <ClCompile Include="..\Source\Nx\ExceptionHandler.cpp">
+      <Filter>Nx</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\wke\icuwin.h" />
+    <ClInclude Include="..\wke\wke.h" />
+    <ClInclude Include="..\wke\wkeChromeClient.h" />
+    <ClInclude Include="..\wke\wkeContextMenuClient.h" />
+    <ClInclude Include="..\wke\wkeDebug.h" />
+    <ClInclude Include="..\wke\wkeDragClient.h" />
+    <ClInclude Include="..\wke\wkeEditorClient.h" />
+    <ClInclude Include="..\wke\wkeFrameLoaderClient.h" />
+    <ClInclude Include="..\wke\wkeInspectorClient.h" />
+    <ClInclude Include="..\wke\wkePlatformStrategies.h" />
+    <ClInclude Include="..\wke\wkePopupMenu.h" />
+    <ClInclude Include="..\wke\wkeString.h" />
+    <ClInclude Include="..\wke\wkeWebView.h" />
+    <ClInclude Include="..\wke\wkeWebWindow.h" />
+    <ClInclude Include="..\Source\Nx\ExceptionHandler.h">
+      <Filter>Nx</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\wke\wke.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Nx">
+      <UniqueIdentifier>{dc211d8e-75ad-44f6-b00e-8286e006f500}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
