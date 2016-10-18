@@ -47,6 +47,12 @@
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release_Cairo_CFLite|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release_Cairo_CFLite|Win32'" />
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Cairo_CFLite|Win32'">
+    <IncludePath>$(ProjectDir)..\Source\;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Cairo_CFLite|Win32'">
+    <IncludePath>$(ProjectDir)..\Source\;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Cairo_CFLite|Win32'">
     <ClCompile>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -61,6 +67,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source\Nx\ExceptionHandler.cpp" />
     <ClCompile Include="..\wke\icuwin.cpp" />
     <ClCompile Include="..\wke\jsBind.cpp" />
     <ClCompile Include="..\wke\wke.cpp" />
@@ -78,6 +85,7 @@
     <ClCompile Include="..\wke\wkeWebWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Source\Nx\ExceptionHandler.h" />
     <ClInclude Include="..\wke\icuwin.h" />
     <ClInclude Include="..\wke\wke.h" />
     <ClInclude Include="..\wke\wkeChromeClient.h" />

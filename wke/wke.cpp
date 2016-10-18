@@ -13,6 +13,7 @@
 #include <WebCore/Console.h>
 #include <WebCore/SecurityOrigin.h>
 #include <WebCore/DatabaseTracker.h>
+#include <Nx/ExceptionHandler.h>
 
 #include "wkePlatformStrategies.h"
 #include "icuwin.h"
@@ -638,6 +639,7 @@ STDAPI_(BOOL) DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID /*lpRe
     BOOL ret = FALSE;
     switch (ul_reason_for_call) {
         case DLL_PROCESS_ATTACH:
+			ExceptionHandler::SetProcessExceptionHandlers();
             WebCore::setInstanceHandle(hModule);
             ret = TRUE;
             break;
@@ -648,6 +650,7 @@ STDAPI_(BOOL) DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID /*lpRe
             break;
 
         case DLL_THREAD_ATTACH:
+			ExceptionHandler::SetThreadExceptionHandlers();
             pthread_win32_thread_attach_np ();
             break;
 
