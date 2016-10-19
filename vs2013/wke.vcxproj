@@ -59,12 +59,16 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_Cairo_CFLite|Win32'">
     <ClCompile>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Nx\ExceptionHandler.cpp" />
@@ -103,12 +107,6 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\wke\wke.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="WebCore.vcxproj">
-      <Project>{1c16337b-acf3-4d03-aa90-851c5b5eada6}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

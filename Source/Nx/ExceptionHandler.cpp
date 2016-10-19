@@ -29,15 +29,32 @@ EXTERNC void * _ReturnAddress(void);
 
 void dumpException(EXCEPTION_POINTERS *pException)
 {
+	//OutputDebugString(L"lwl, wke.dd 走到dumpException\n");
 	char MyDir[_MAX_PATH];
 	SHGetSpecialFolderPathA(NULL, MyDir, CSIDL_APPDATA, 0);
 	std::string logPath(MyDir);
-	logPath += "\\2LV Files\\logs\\2LvReport.dmp";
-	
+	logPath += "\\2LV Files\\logs\\";
+
+	SYSTEMTIME st = { 0 };
+	::GetLocalTime(&st);
+	char cBuf[50] = { 0 };
+	sprintf_s(cBuf, _countof(cBuf), "%04d-%02d-%02d %02d%02d%02d",
+		st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond);
+
+	char cBufName[50] = { 0 };
+	sprintf_s(cBufName, "2LvReport_%s.dmp", cBuf);
+	logPath += cBufName;
+
+	//OutputDebugStringA(logPath.c_str());
+
 	// 创建Dump文件  
 	//  
 	HANDLE hDumpFile = CreateFileA(logPath.c_str(), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-
+	if (hDumpFile == INVALID_HANDLE_VALUE)
+	{
+		//OutputDebugString(L"lwl, wke创建deump文件失败");
+		return;
+	}
 	// Dump信息  
 	//  
 	MINIDUMP_EXCEPTION_INFORMATION dumpInfo;
@@ -150,6 +167,39 @@ std::string exInformation(const _EXCEPTION_POINTERS* ep)
 	return oss.str();
 }
 
+LPTOP_LEVEL_EXCEPTION_FILTER WINAPI MyDummySetUnhandledExceptionFilter(LPTOP_LEVEL_EXCEPTION_FILTER lpTopLevelExceptionFilter)
+{
+	return NULL;
+}
+
+BOOL PreventSetUnhandledExceptionFilter()
+{
+	HMODULE hKernel32 = LoadLibrary(L"kernel32.dll");
+	if (hKernel32 == NULL)
+		return FALSE;
+
+
+	void *pOrgEntry = GetProcAddress(hKernel32, "SetUnhandledExceptionFilter");
+	if (pOrgEntry == NULL)
+		return FALSE;
+
+
+	unsigned char newJump[100];
+	DWORD dwOrgEntryAddr = (DWORD)pOrgEntry;
+	dwOrgEntryAddr += 5; // add 5 for 5 op-codes for jmp far
+
+
+	void *pNewFunc = &MyDummySetUnhandledExceptionFilter;
+	DWORD dwNewEntryAddr = (DWORD)pNewFunc;
+	DWORD dwRelativeAddr = dwNewEntryAddr - dwOrgEntryAddr;
+
+
+	newJump[0] = 0xE9;  // JMP absolute
+	memcpy(&newJump[1], &dwRelativeAddr, sizeof(pNewFunc));
+	SIZE_T bytesWritten;
+	BOOL bRet = WriteProcessMemory(GetCurrentProcess(), pOrgEntry, newJump, sizeof(pNewFunc) + 1, &bytesWritten);
+	return bRet;
+}
 
 void ExceptionHandler::SetProcessExceptionHandlers()
 {
@@ -183,6 +233,8 @@ void ExceptionHandler::SetProcessExceptionHandlers()
 
 	// Install top-level SEH handler
 	SetUnhandledExceptionFilter(SehHandler);
+
+	PreventSetUnhandledExceptionFilter();
 }
 
 void ExceptionHandler::SetThreadExceptionHandlers()
