@@ -727,9 +727,9 @@ void onCreateGlobalObject(JSC::JSGlobalObject* globalObject)
 }
 
 
-//Todo: alter by liwanliang at 2016/10/20 11:43 begin
+//ALTER_liwanliang:  at 2016/10/20 12:01 begin
 jsValue jsArg(jsExecState es, int argIdx)
 {
 	return wkeJSParam(es, argIdx);
 }
-//add by liwanliang 2016-10-20 11:07:22, end
+//ALTER_liwanliang:  at 2016/10/20 12:01 end
