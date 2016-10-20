@@ -562,8 +562,12 @@ WKE_API void       WKE_CALL  wkeJSAddRef(wkeJSState* es, wkeJSValue v);
 WKE_API void       WKE_CALL  wkeJSReleaseRef(wkeJSState* es, wkeJSValue v);
 WKE_API void       WKE_CALL  wkeJSCollectGarbge(); 
 
+//Todo: alter by liwanliang at 2016/10/20 11:45 begin
+typedef wkeJSState* jsExecState;
+typedef __int64 jsValue;
 
-
+WKE_API jsValue WKE_CALL jsArg(jsExecState es, int argIdx);
+//Todo: alter by liwanliang at 2016/10/20 11:45 end
 
 #ifdef __cplusplus
 }

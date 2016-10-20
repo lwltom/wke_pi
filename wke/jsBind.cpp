@@ -725,3 +725,11 @@ void onCreateGlobalObject(JSC::JSGlobalObject* globalObject)
             addSetter(globalObject, s_jsFunctions[i].name, s_jsFunctions[i].fn);
     }
 }
+
+
+//Todo: alter by liwanliang at 2016/10/20 11:43 begin
+jsValue jsArg(jsExecState es, int argIdx)
+{
+	return wkeJSParam(es, argIdx);
+}
+//add by liwanliang 2016-10-20 11:07:22, end
