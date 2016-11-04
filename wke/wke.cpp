@@ -652,7 +652,7 @@ STDAPI_(BOOL) DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID /*lpRe
     BOOL ret = FALSE;
     switch (ul_reason_for_call) {
         case DLL_PROCESS_ATTACH:
-			ExceptionHandler::SetDumpHeadName("wke");
+			ExceptionHandler::SetModuleHandle(hModule);
 			ExceptionHandler::SetProcessExceptionHandlers();
             WebCore::setInstanceHandle(hModule);
 			

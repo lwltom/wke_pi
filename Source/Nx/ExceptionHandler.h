@@ -39,5 +39,6 @@ public:
 	static void SigsegvHandler(int);
 	static void SigtermHandler(int);
 	static void SetDumpHeadName(LPCSTR szName);
+	static void SetModuleHandle(HMODULE hModule);
 
 };
