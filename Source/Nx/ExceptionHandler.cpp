@@ -9,6 +9,7 @@
 #pragma comment(lib, "shell32.lib")
 #pragma comment(lib, "Dbghelp.lib")
 using std::string;
+using std::wstring;
 using std::ostringstream;
 //using namespace skt;
 
@@ -27,9 +28,16 @@ EXTERNC void * _ReturnAddress(void);
 
 #endif 
 
+static string g_strDumpHeadName;
+
 void dumpException(EXCEPTION_POINTERS *pException)
 {
-	//OutputDebugString(L"lwl, wke.dd 走到dumpException\n");
+	{
+		char cBuf[50] = { 0 };
+		sprintf_s(cBuf, _countof(cBuf), "%s 走到dumpException.\n", g_strDumpHeadName.c_str());
+		OutputDebugStringA(cBuf);
+	}
+
 	char MyDir[_MAX_PATH];
 	SHGetSpecialFolderPathA(NULL, MyDir, CSIDL_APPDATA, 0);
 	std::string logPath(MyDir);
@@ -42,7 +50,7 @@ void dumpException(EXCEPTION_POINTERS *pException)
 		st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond);
 
 	char cBufName[50] = { 0 };
-	sprintf_s(cBufName, "2LvReport_%s.dmp", cBuf);
+	sprintf_s(cBufName, "%s_%s.dmp", g_strDumpHeadName.c_str(), cBuf);
 	logPath += cBufName;
 
 	//OutputDebugStringA(logPath.c_str());
@@ -233,7 +241,9 @@ void ExceptionHandler::SetProcessExceptionHandlers()
 
 	// Install top-level SEH handler
 	SetUnhandledExceptionFilter(SehHandler);
-
+	char cBuf[50] = { 0 };
+	sprintf_s(cBuf, _countof(cBuf), "set exception dump:%s \n", g_strDumpHeadName.c_str());
+	OutputDebugStringA(cBuf);
 	PreventSetUnhandledExceptionFilter();
 }
 
@@ -514,6 +524,11 @@ void ExceptionHandler::SigtermHandler(int)
 	dumpException(pExceptionPtrs);
 
 	//throw EngineException("CRT SIGTERM signal." + exInformation(pExceptionPtrs));
+}
+
+void ExceptionHandler::SetDumpHeadName(LPCSTR szName)
+{
+	g_strDumpHeadName = szName;
 }
 
 

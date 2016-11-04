@@ -38,6 +38,6 @@ public:
 	static void SigillHandler(int);
 	static void SigsegvHandler(int);
 	static void SigtermHandler(int);
-
+	static void SetDumpHeadName(LPCSTR szName);
 
 };

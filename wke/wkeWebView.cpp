@@ -536,7 +536,9 @@ namespace wke
                 dst += pitch;
             }
         }
-
+		ChromeClient* client = (ChromeClient*)page()->chrome()->client();
+		client->paintPopupMenu(bits, pitch);
+		client->paintToolTip(bits, pitch);
     }
 
     void CWebView::paint(void* bits, int bufWid, int bufHei, int xDst, int yDst, int w, int h, int xSrc, int ySrc, bool bCopyAlpha)
@@ -580,6 +582,10 @@ namespace wke
                 src += (m_width - w)*4;
             }
         }
+
+		/*ChromeClient* client = (ChromeClient*)page()->chrome()->client();
+		client->paintPopupMenu(bits, pitchDst);
+		client->paintToolTip(bits, pitchDst);*/
     }
 
     bool CWebView::canGoBack() const

@@ -40,7 +40,8 @@ void wkeInitialize()
     icuwin_init();
 
 	//test dump
-	/*{
+	/*
+	{
 		char* pMem = new char[1024 * 1024 * 1024];
 		pMem = new char[1024 * 1024 * 1024];
 		pMem = new char[1024 * 1024 * 1024];
@@ -48,7 +49,8 @@ void wkeInitialize()
 		memset(pMem, 0, 1024 * 1024 * 1024 + 5);
 		*pMem = 3;
 		throw 3;
-	}*/
+	}
+	*/
 
     JSC::initializeThreading();
     WTF::initializeMainThread();
@@ -650,7 +652,7 @@ STDAPI_(BOOL) DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID /*lpRe
     BOOL ret = FALSE;
     switch (ul_reason_for_call) {
         case DLL_PROCESS_ATTACH:
-			//OutputDebugString(L"lwl, wke.dd Êä³ö³ö×Ö·û´®\n");
+			ExceptionHandler::SetDumpHeadName("wke");
 			ExceptionHandler::SetProcessExceptionHandlers();
             WebCore::setInstanceHandle(hModule);
 			
