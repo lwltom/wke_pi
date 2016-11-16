@@ -36,11 +36,15 @@ static string g_strDumpHeadName;
 
 void dumpException(EXCEPTION_POINTERS *pException)
 {
-	{
-		char cBuf[50] = { 0 };
-		sprintf_s(cBuf, _countof(cBuf), "%s 走到dumpException.\n", g_strDumpHeadName.c_str());
-		OutputDebugStringA(cBuf);
-	}
+	string strName;
+	string strPath(MAX_PATH, 0);
+	GetModuleFileNameA(g_hModule, &strPath.at(0), MAX_PATH);
+	strName = ::PathFindFileNameA(strPath.c_str());
+	
+	char cBuf[50] = { 0 };
+	sprintf_s(cBuf, _countof(cBuf), "%s 走到dumpException.\n", strName.c_str());
+	OutputDebugStringA(cBuf);
+	
 
 	char MyDir[_MAX_PATH];
 	SHGetSpecialFolderPathA(NULL, MyDir, CSIDL_APPDATA, 0);
@@ -50,18 +54,14 @@ void dumpException(EXCEPTION_POINTERS *pException)
 
 	SYSTEMTIME st = { 0 };
 	::GetLocalTime(&st);
-	char cBuf[50] = { 0 };
-	sprintf_s(cBuf, _countof(cBuf), "%04d-%02d-%02d %02d%02d%02d",
+	char cBufDT[50] = { 0 };
+	sprintf_s(cBufDT, _countof(cBufDT), "%04d-%02d-%02d %02d%02d%02d",
 		st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond);
 
-	string strName;
-	string strPath(MAX_PATH, 0);
-	GetModuleFileNameA(g_hModule, &strPath.at(0), MAX_PATH);
-	strName = ::PathFindFileNameA(strPath.c_str());
 	
 	
 	char cBufName[50] = { 0 };
-	sprintf_s(cBufName, "%s_%s.dmp", strName.c_str(), cBuf);
+	sprintf_s(cBufName, "%s_%s.dmp", strName.c_str(), cBufDT);
 	logPath += cBufName;
 
 	
