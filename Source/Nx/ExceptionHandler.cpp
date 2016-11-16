@@ -252,9 +252,9 @@ void ExceptionHandler::SetProcessExceptionHandlers()
 
 	// Install top-level SEH handler
 	SetUnhandledExceptionFilter(SehHandler);
-	char cBuf[50] = { 0 };
+	/*char cBuf[50] = { 0 };
 	sprintf_s(cBuf, _countof(cBuf), "set exception dump:%s \n", g_strDumpHeadName.c_str());
-	OutputDebugStringA(cBuf);
+	OutputDebugStringA(cBuf);*/
 	PreventSetUnhandledExceptionFilter();
 }
 
@@ -546,4 +546,5 @@ void ExceptionHandler::SetModuleHandle(HMODULE hModule)
 {
 	g_hModule = hModule;
 }
+
 
