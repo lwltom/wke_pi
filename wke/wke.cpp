@@ -483,7 +483,8 @@ wkeJSValue wkeRunJS(wkeWebView* webView, const utf8* script)
 
 wkeJSValue wkeRunJSW(wkeWebView* webView, const wchar_t* script)
 {
-    return webView->runJS(script);
+    //return webView->runJS(script);
+	return webView->runJSReturn(script);
 }
 
 wkeJSState* wkeGlobalExec(wkeWebView* webView)

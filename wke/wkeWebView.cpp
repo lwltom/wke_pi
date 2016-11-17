@@ -1103,9 +1103,26 @@ namespace wke
         WebCore::ScriptValue value = m_mainFrame->script()->executeScript(string, true);
         if (value.hasNoValue())
             return wkeJSUndefined(globalExec());
-
+		
         return (wkeJSValue)JSC::JSValue::encode(value.jsValue());
     }
+
+	//ALTER_liwanliang:  at 2016/11/17 19:30
+	wkeJSValue CWebView::runJSReturn(const wchar_t* script)
+	{
+		String string(script);
+		WebCore::ScriptValue value = m_mainFrame->script()->executeScript(string, true);
+		if (value.hasNoValue())
+			return wkeJSUndefined(globalExec());//执行失败 
+
+		//执行成功没有返回值， hasNoValue false. isUndefined为true
+		//wkeJSValue定义: 执行成功为原始值(或者Underfined)， 失败为NULL
+		if (value.isUndefined())
+		{
+			return wkeJSNull(globalExec());// 成功，没有返回值
+		}
+		return (wkeJSValue)JSC::JSValue::encode(value.jsValue()); //成功， 有返回值
+	}
 
     wkeJSValue CWebView::runJS(const utf8* script)
     {

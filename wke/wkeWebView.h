@@ -177,7 +177,12 @@ public:
     
     wkeRect caretRect();
     
-    wkeJSValue runJS(const wchar_t* script);
+	wkeJSValue runJS(const wchar_t* script);
+
+	//ALTER_liwanliang:  at 2016/11/17 19:18, 增加区分执行失败和执行成功没返回值的情况
+	//wkeJSValue定义: 执行成功为原始值(或者Underfined)， 失败为NULL
+	wkeJSValue runJSReturn(const wchar_t* script);
+
     wkeJSValue runJS(const utf8* script);
     wkeJSState* globalExec();
     
