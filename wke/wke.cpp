@@ -653,8 +653,8 @@ STDAPI_(BOOL) DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID /*lpRe
     BOOL ret = FALSE;
     switch (ul_reason_for_call) {
         case DLL_PROCESS_ATTACH:
-			ExceptionHandler::SetModuleHandle(hModule);
-			ExceptionHandler::SetProcessExceptionHandlers();
+			//ExceptionHandler::SetModuleHandle(hModule);
+			//ExceptionHandler::SetProcessExceptionHandlers();
             WebCore::setInstanceHandle(hModule);
 			
             ret = TRUE;
@@ -666,7 +666,7 @@ STDAPI_(BOOL) DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID /*lpRe
             break;
 
         case DLL_THREAD_ATTACH:
-			ExceptionHandler::SetThreadExceptionHandlers();
+			//ExceptionHandler::SetThreadExceptionHandlers();
             pthread_win32_thread_attach_np ();
             break;
 
