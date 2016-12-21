@@ -65,6 +65,13 @@ bool GIFImageDecoder::isSizeAvailable()
 
 bool GIFImageDecoder::setSize(unsigned width, unsigned height)
 {
+	//todo alter by liwanliang
+	int nMax = 2000;
+	if (width > nMax || height > nMax)
+	{
+		return false;
+	}
+
     if (ImageDecoder::isSizeAvailable() && size() == IntSize(width, height))
         return true;
 
