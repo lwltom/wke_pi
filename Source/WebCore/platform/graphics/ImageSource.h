@@ -179,18 +179,18 @@ public:
     bool frameHasAlphaAtIndex(size_t); // Whether or not the frame actually used any alpha.
     bool frameIsCompleteAtIndex(size_t); // Whether or not the frame is completely decoded.
 
-#if ENABLE(IMAGE_DECODER_DOWN_SAMPLING)
+//#if ENABLE(IMAGE_DECODER_DOWN_SAMPLING)
     static unsigned maxPixelsPerDecodedImage() { return s_maxPixelsPerDecodedImage; }
     static void setMaxPixelsPerDecodedImage(unsigned maxPixels) { s_maxPixelsPerDecodedImage = maxPixels; }
-#endif
+//#endif
 
 private:
     NativeImageSourcePtr m_decoder;
     AlphaOption m_alphaOption;
     GammaAndColorProfileOption m_gammaAndColorProfileOption;
-#if ENABLE(IMAGE_DECODER_DOWN_SAMPLING)
+//#if ENABLE(IMAGE_DECODER_DOWN_SAMPLING)
     static unsigned s_maxPixelsPerDecodedImage;
-#endif
+//#endif
 };
 
 }

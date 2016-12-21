@@ -49,6 +49,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Cairo_CFLite|Win32'">
     <IncludePath>$(ProjectDir)..\Source\;$(IncludePath)</IncludePath>
+    <OutDir>..\..\nc\output\Bin_Debug\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Cairo_CFLite|Win32'">
     <IncludePath>$(ProjectDir)..\Source\;$(IncludePath)</IncludePath>
@@ -67,7 +68,7 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -37,9 +37,9 @@
 
 namespace WebCore {
 
-#if ENABLE(IMAGE_DECODER_DOWN_SAMPLING)
-unsigned ImageSource::s_maxPixelsPerDecodedImage = 1024 * 1024;
-#endif
+//#if ENABLE(IMAGE_DECODER_DOWN_SAMPLING)
+unsigned ImageSource::s_maxPixelsPerDecodedImage = 1024 * 1024 * 3;
+//#endif
 
 ImageSource::ImageSource(ImageSource::AlphaOption alphaOption, ImageSource::GammaAndColorProfileOption gammaAndColorProfileOption)
     : m_decoder(0)
@@ -80,10 +80,10 @@ void ImageSource::setData(SharedBuffer* data, bool allDataReceived)
     // made.
     if (!m_decoder) {
         m_decoder = static_cast<NativeImageSourcePtr>(ImageDecoder::create(*data, m_alphaOption, m_gammaAndColorProfileOption));
-#if ENABLE(IMAGE_DECODER_DOWN_SAMPLING)
+//#if ENABLE(IMAGE_DECODER_DOWN_SAMPLING)
         if (m_decoder && s_maxPixelsPerDecodedImage)
             m_decoder->setMaxNumPixels(s_maxPixelsPerDecodedImage);
-#endif
+//#endif
     }
 
     if (m_decoder)

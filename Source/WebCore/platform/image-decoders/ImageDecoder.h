@@ -279,6 +279,17 @@ namespace WebCore {
         // overflow elsewhere).  If not, marks decoding as failed.
         virtual bool setSize(unsigned width, unsigned height)
         {
+			/************************************************************************
+					todo:
+			************************************************************************/
+			/*{
+				int nMax = 1500;
+				width = width < nMax ? width : nMax;
+				height = height < nMax ? height : nMax;
+				m_scaled = true;
+				//m_sc
+			}*/
+
             if (isOverSize(width, height))
                 return setFailed();
             m_size = IntSize(width, height);
@@ -318,9 +329,9 @@ namespace WebCore {
         // compositing).
         virtual void clearFrameBufferCache(size_t) { }
 
-#if ENABLE(IMAGE_DECODER_DOWN_SAMPLING)
+//#if ENABLE(IMAGE_DECODER_DOWN_SAMPLING)
         void setMaxNumPixels(int m) { m_maxNumPixels = m; }
-#endif
+//#endif
 
     protected:
         void prepareScaleDataIfNecessary();

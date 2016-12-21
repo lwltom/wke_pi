@@ -525,7 +525,7 @@ bool ChromeClient::canRunBeforeUnloadConfirmPanel()
 
 void ChromeClient::addMessageToConsole(WebCore::MessageSource source, WebCore::MessageType type, WebCore::MessageLevel level, const WTF::String& message, unsigned int lineNumber, const WTF::String& url)
 {
-    outputMsg(L"console message %s %d %s\n", CSTR(message), lineNumber, CSTR(url));
+    //outputMsg(L"console message %s %d %s\n", CSTR(message), lineNumber, CSTR(url));
 
     wke::CWebViewHandler& handler = m_webView->m_handler;
     if (!handler.consoleMessageCallback)

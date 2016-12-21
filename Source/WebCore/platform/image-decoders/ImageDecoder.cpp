@@ -216,6 +216,15 @@ bool ImageFrame::copyBitmapData(const ImageFrame& other)
 
 bool ImageFrame::setSize(int newWidth, int newHeight)
 {
+	int nMax = 1500;
+	if (newWidth  > nMax || newHeight > nMax)
+	{
+	return false;
+	}
+	/*
+	newWidth = min(newWidth, nMax);
+	newHeight = min(newHeight, nMax);*/
+	
     // NOTE: This has no way to check for allocation failure if the requested
     // size was too big...
     m_backingStore.resize(newWidth * newHeight);
