@@ -169,8 +169,60 @@ static inline bool scrollNode(float delta, WheelEvent::Granularity granularity, 
 
 #if !PLATFORM(MAC)
 
-inline bool EventHandler::eventLoopHandleMouseUp(const MouseEventWithHitTestResults&)
+inline bool EventHandler::eventLoopHandleMouseUp(const MouseEventWithHitTestResults& event)
 {
+	return false;		//屏蔽生成图片的功能
+
+
+	DragState& ds = dragState();
+	if (ds.m_dragType != DragSourceActionImage)
+	{
+		return false;
+	}
+
+	/*if (node && m_frame->page())
+		dragState().m_dragSrc = m_frame->page()->dragController()->draggableNode(m_frame, node, m_mouseDownPos, dragState());
+	else
+		dragState().m_dragSrc = 0;
+
+	*/
+	Node* node = ds.m_dragSrc.get();
+	if (!node)
+	{
+		return false;
+	}
+	Element* element = static_cast<Element*>(node);
+	
+/*
+
+	{
+		RenderObject* renderer = element->renderer();
+		if (!renderer || !renderer->isImage())
+			return 0;
+		RenderImage* image = toRenderImage(renderer);
+		CachedImage* cachedImage = image->cachedImage();
+		return (cachedImage && !cachedImage->errorOccurred()) ?
+			cachedImage->imageForRenderer(element->renderer()) : 0;
+
+	}*/
+	Image* im = getImage(element);
+
+	SharedBuffer* imageBuffer = im->data();
+	if (!imageBuffer || !imageBuffer->size())
+		return false;
+	wchar_t filePath[255] = {L"C:\\Users\\Public\\Desktop\\555.jpg"};
+	HANDLE tempFileHandle = CreateFile(filePath, GENERIC_READ | GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
+	if (tempFileHandle == INVALID_HANDLE_VALUE)
+		return false;
+
+	// Write the data to this temp file.
+	DWORD written;
+	BOOL tempWriteSucceeded = WriteFile(tempFileHandle, imageBuffer->data(), imageBuffer->size(), &written, 0);
+	CloseHandle(tempFileHandle);
+	if (!tempWriteSucceeded)
+		return false;
+
+
     return false;
 }
 

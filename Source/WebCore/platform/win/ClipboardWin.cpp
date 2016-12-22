@@ -653,6 +653,7 @@ static void writeImageToDataObject(IDataObject* dataObject, Element* element, co
     }
 
     String fileName = cachedImage->response().suggestedFilename();
+	//fileName = L"tttttttt.htm";
     HGLOBAL hDropContent = createGlobalHDropContent(url, fileName, imageBuffer);
     if (!hDropContent) {
         GlobalFree(hDropContent);

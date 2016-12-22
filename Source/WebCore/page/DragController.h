@@ -125,7 +125,12 @@ namespace WebCore {
         IntPoint m_dragOffset;
         KURL m_draggingImageURL;
     };
+	Image* getImage(
+		Element* element);
+	CachedImage* getCachedImage(Element* element);
 
 }
+
+
 
 #endif

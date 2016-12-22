@@ -596,7 +596,7 @@ Node* DragController::draggableNode(const Frame* src, Node* startNode, const Int
     return (state.m_dragType & DragSourceActionSelection) ? startNode : 0;
 }
 
-static CachedImage* getCachedImage(Element* element)
+ CachedImage* getCachedImage(Element* element)
 {
     ASSERT(element);
     RenderObject* renderer = element->renderer();
@@ -606,7 +606,7 @@ static CachedImage* getCachedImage(Element* element)
     return image->cachedImage();
 }
 
-static Image* getImage(Element* element)
+ Image* getImage(Element* element)
 {
     ASSERT(element);
     CachedImage* cachedImage = getCachedImage(element);

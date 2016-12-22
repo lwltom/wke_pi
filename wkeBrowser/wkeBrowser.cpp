@@ -169,6 +169,19 @@ wkeWebView* onCreateView(wkeWebView* webView, void* param, const wkeNewViewInfo*
     return NULL;
 }
 
+
+void OnwkeLoadingFinishCallback(wkeWebView* webView, void* param, const wkeString* url, wkeLoadingResult result, const wkeString* failedReason)
+{
+	
+	if (!webView || !url)
+	{
+		return;
+	}
+	LPCWSTR szUrl = wkeGetStringW(url);
+	OutputDebugString(szUrl);
+	return;
+}
+
 const wchar_t* messageSourceName(int i)
 {
     const wchar_t* s_names[] = {
@@ -426,6 +439,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     wkeOnURLChanged(g_webView, onURLChanged, NULL);
     wkeOnNavigation(g_webView, onNavigation, NULL);
     wkeOnCreateView(g_webView, onCreateView, NULL);
+	wkeOnLoadingFinish(g_webView, OnwkeLoadingFinishCallback, nullptr);
 
     if (g_consoleLog = fopen("wkeBrowserConsole.txt", "wb"))
         fwrite("\xFF\xFE", 2, 1, g_consoleLog);
