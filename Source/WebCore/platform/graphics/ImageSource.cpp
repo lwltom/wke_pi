@@ -38,7 +38,7 @@
 namespace WebCore {
 
 //#if ENABLE(IMAGE_DECODER_DOWN_SAMPLING)
-unsigned ImageSource::s_maxPixelsPerDecodedImage = 1024 * 1024 * 3;
+	unsigned ImageSource::s_maxPixelsPerDecodedImage = 0; //不限制图片大小 1024 * 1024 * 3;
 //#endif
 
 ImageSource::ImageSource(ImageSource::AlphaOption alphaOption, ImageSource::GammaAndColorProfileOption gammaAndColorProfileOption)
