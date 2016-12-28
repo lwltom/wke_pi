@@ -19,6 +19,15 @@
     <ClCompile Include="..\Source\Nx\ExceptionHandler.cpp">
       <Filter>Nx</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Nx\DragDropImpl.cpp">
+      <Filter>Nx\sdk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Nx\PiDataSource.cpp">
+      <Filter>Nx\sdk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Nx\GDIPUtil.cpp">
+      <Filter>Nx\sdk</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\wke\icuwin.h" />
@@ -38,6 +47,18 @@
     <ClInclude Include="..\Source\Nx\ExceptionHandler.h">
       <Filter>Nx</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Nx\DragDropImpl.h">
+      <Filter>Nx\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Nx\PiDataSource.h">
+      <Filter>Nx\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Nx\PiTypeDef.h">
+      <Filter>Nx\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Nx\GDIPUtil.h">
+      <Filter>Nx\sdk</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\wke\wke.rc" />
@@ -45,6 +66,9 @@
   <ItemGroup>
     <Filter Include="Nx">
       <UniqueIdentifier>{dc211d8e-75ad-44f6-b00e-8286e006f500}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nx\sdk">
+      <UniqueIdentifier>{b0017f2f-0dab-47e5-bf0b-52d642d168aa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

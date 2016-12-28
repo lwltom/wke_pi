@@ -70,6 +70,9 @@
 #include <wtf/CurrentTime.h>
 #include <wtf/RefPtr.h>
 
+//ALTER_liwanliang:  at 2016/12/28 16:19
+#include "Nx\\PiDataSource.h"
+
 namespace WebCore {
 
 static PlatformMouseEvent createMouseEvent(DragData* dragData)
@@ -727,6 +730,8 @@ bool DragController::startDrag(Frame* src, const DragState& state, DragOperation
         // This is an early detection for problems encountered later upon drop.
         ASSERT(!image->filenameExtension().isEmpty());
         Element* element = static_cast<Element*>(node);
+		DragCustom(element);
+
         if (!clipboard->hasData()) {
             m_draggingImageURL = imageURL;
             prepareClipboardForImageDrag(src, clipboard, element, linkURL, imageURL, hitTestResult.altDisplayString());
@@ -847,6 +852,42 @@ void DragController::placeDragCaret(const IntPoint& windowPoint)
     IntPoint framePoint = frameView->windowToContents(windowPoint);
 
     m_page->dragCaretController()->setCaretPosition(frame->visiblePositionForPoint(framePoint));
+}
+
+void DragController::DragCustom(Element* element)
+{
+	OutputDebugString(_T("----drag image\n"));
+	CPiDataSource piSour;
+	piSour.PrepareDrag();
+
+	tstring strTempFile;
+	{
+		//没找到缓存路径， 先生成
+		TCHAR szBuffer[MAX_PATH];
+		ExpandEnvironmentStrings(_T("%TEMP%"), szBuffer, MAX_PATH);
+		strTempFile = szBuffer;
+		strTempFile += _T("\\");
+		strTempFile += _T("temp.jpg");
+
+		Image* im = getImage(element);
+		SharedBuffer* imageBuffer = im->data();
+		if (!imageBuffer || !imageBuffer->size())
+			return ;
+		
+		HANDLE tempFileHandle = CreateFile(strTempFile.c_str(), GENERIC_READ | GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
+		if (tempFileHandle == INVALID_HANDLE_VALUE)
+			return ;
+
+		// Write the data to this temp file.
+		DWORD written;
+		BOOL tempWriteSucceeded = WriteFile(tempFileHandle, imageBuffer->data(), imageBuffer->size(), &written, 0);
+		CloseHandle(tempFileHandle);
+		if (!tempWriteSucceeded)
+			return ;
+	}
+	piSour.BeginDrag(strTempFile.c_str());
+	//piSour.BeginDrag(_T("e:\\work\\svn\\nc\\src\\“发帖子”韩文怎么写？_百度知道.htm"));
+	piSour.CancelDrag();
 }
 
 } // namespace WebCore
