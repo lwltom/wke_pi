@@ -4,6 +4,7 @@
 #include <string>
 #include <gdiplus.h>
 #include <assert.h> 
+#include "GDIPUtil.h"
 #pragma comment(lib, "GdiPlus.lib")
 
 using std::string;
@@ -17,11 +18,23 @@ CPiDataSource::CPiDataSource()
 	m_hDragBitmap	= NULL;
 	HRESULT hR = OleInitialize(NULL);
 	hR = 0;
+	m_bClientPos = true;
 }
 
 
 CPiDataSource::~CPiDataSource()
 {
+	if (m_hDragBitmap)
+	{
+		DeleteObject(m_hDragBitmap);
+		m_hDragBitmap = NULL;
+	}
+
+	if (m_hWnd && m_dc)
+	{
+		::ReleaseDC(m_hWnd, m_dc);
+		m_dc = NULL;
+	}
 	OleUninitialize();
 }
 
@@ -31,9 +44,9 @@ bool CPiDataSource::Drag(tcpchar szPath)
 	{
 		return false;
 	}
+
 	CIDropSource* pdsrc = new CIDropSource;
-	
-		if (pdsrc == NULL) return 0;
+	if (pdsrc == NULL) return 0;
 	pdsrc->AddRef();
 
 
@@ -42,14 +55,12 @@ bool CPiDataSource::Drag(tcpchar szPath)
 	pdobj->AddRef();
 
 
-
 	DROPFILES*     pDrop;
 	UINT           uBuffSize = 0;
 	HGLOBAL        hgDrop;
 	wstring			strFile(szPath);
 	TCHAR*         pszBuff;
 
-	
 	uBuffSize += strFile.length() + 1;
 	uBuffSize = sizeof(DROPFILES) + sizeof(TCHAR) * (uBuffSize + 1);
 
@@ -85,21 +96,16 @@ bool CPiDataSource::Drag(tcpchar szPath)
 
 	// Put the data in the data source.
 
-	//pDatasrc->CacheGlobalData(CF_HDROP, hgDrop, &etc);
-
-
-
 
 	FORMATETC fmtetc = { 0 };
 	STGMEDIUM medium = { 0 };
-	fmtetc.dwAspect = DVASPECT_CONTENT;
+	/*fmtetc.dwAspect = DVASPECT_CONTENT;
 	fmtetc.lindex = -1;
 	//////////////////////////////////////
 	fmtetc.cfFormat = CF_BITMAP;
 	fmtetc.tymed = TYMED_GDI;
 	medium.tymed = TYMED_GDI;
-	pdobj->SetData(&fmtetc, &medium, FALSE);
-
+	pdobj->SetData(&fmtetc, &medium, FALSE);*/
 
 	{
 		//file
@@ -113,9 +119,11 @@ bool CPiDataSource::Drag(tcpchar szPath)
 		medium.hGlobal = hgDrop;
 		pdobj->SetData(&fmtetc, &medium, TRUE);
 	}
-	if (m_dc)
+
+	//HBITMAP hBitmap = (HBITMAP)OleDuplicateData(m_hDragBitmap, fmtetc.cfFormat, NULL);
+	HBITMAP hBitmap = m_hDragBitmap;
+	if (m_dc && hBitmap)
 	{
-		HBITMAP hBitmap = (HBITMAP)OleDuplicateData(m_hDragBitmap, fmtetc.cfFormat, NULL);
 		//medium.hBitmap = hBitmap;
 		//medium.hBitmap = m_hDragBitmap;
 		//pdobj->SetData(&fmtetc, &medium, FALSE);
@@ -123,7 +131,7 @@ bool CPiDataSource::Drag(tcpchar szPath)
 		BITMAP bmap;
 		GetObject(hBitmap, sizeof(BITMAP), &bmap);
 		RECT rc = { 0, 0, bmap.bmWidth, bmap.bmHeight };
-		fmtetc.cfFormat = CF_ENHMETAFILE;
+		/*fmtetc.cfFormat = CF_ENHMETAFILE;
 		fmtetc.tymed = TYMED_ENHMF;
 		HDC hMetaDC = CreateEnhMetaFile(m_dc, NULL, NULL, NULL);
 		HDC hdcMem = CreateCompatibleDC(m_dc);
@@ -133,7 +141,7 @@ bool CPiDataSource::Drag(tcpchar szPath)
 		medium.hEnhMetaFile = CloseEnhMetaFile(hMetaDC);
 		DeleteDC(hdcMem);
 		medium.tymed = TYMED_ENHMF;
-		pdobj->SetData(&fmtetc, &medium, TRUE);
+		pdobj->SetData(&fmtetc, &medium, TRUE);*/
 		//////////////////////////////////////
 		CDragSourceHelper dragSrcHelper;
 		POINT ptDrag = { 0 };
@@ -147,22 +155,22 @@ bool CPiDataSource::Drag(tcpchar szPath)
 	HRESULT hr = ::DoDragDrop(pdobj, pdsrc, DROPEFFECT_COPY | DROPEFFECT_MOVE, &dwEffect);
 	pdsrc->Release();
 	pdobj->Release();
-	//m_bDragMode = false;
-	
+	::DeleteObject(m_hDragBitmap);
+	m_hDragBitmap = NULL;
 
 	return true;
 }
 
-void CPiDataSource::GeneralPic()
+void CPiDataSource::GeneralPic(RECT rtPic)
 {
-	if (!m_dc)
+	if (!m_dc || rtPic.left == rtPic.right)
 	{
 		return;
 	}
-
-	RECT rc = {100, 100, 200, 200};
-	int cx = rc.right - rc.left;
-	int cy = rc.bottom - rc.top;
+	SIZE szPic = { rtPic.right - rtPic.left, rtPic.bottom - rtPic.top };
+	//RECT rc = {0, 0, 100, 100};
+	int cx = szPic.cx;
+	int cy = szPic.cy;
 
 	HDC hPaintDC = ::CreateCompatibleDC(m_dc);
 	HBITMAP hPaintBitmap = ::CreateCompatibleBitmap(m_dc, cx, cy);
@@ -172,10 +180,16 @@ void CPiDataSource::GeneralPic()
 	//pControl->DoPaint(hPaintDC, rc);			//限制内容
 	{
 		//draw Drag Image
-		DWORD color = 65280;
-		Gdiplus::Graphics graphics(m_dc);
+		/*DWORD color = 4290305275;
+		Gdiplus::Graphics graphics(hPaintDC);
 		Gdiplus::SolidBrush brush(Gdiplus::Color((LOBYTE((color) >> 24)), GetBValue(color), GetGValue(color), GetRValue(color)));
-		graphics.FillRectangle(&brush, rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top);
+		graphics.FillRectangle(&brush, rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top);*/
+
+	}
+
+	{
+		//获取dc里指定区域的图片
+		::BitBlt(hPaintDC, 0, 0, rtPic.right - rtPic.left, rtPic.bottom - rtPic.top, m_dc, rtPic.left, rtPic.top, SRCCOPY);
 
 	}
 	BITMAPINFO bmi = { 0 };
@@ -194,7 +208,7 @@ void CPiDataSource::GeneralPic()
 	if (hBitmap != NULL)
 	{
 		HBITMAP hOldBitmap = (HBITMAP) ::SelectObject(hCloneDC, hBitmap);
-		::BitBlt(hCloneDC, 0, 0, cx, cy, hPaintDC, rc.left, rc.top, SRCCOPY);
+		::BitBlt(hCloneDC, 0, 0, cx, cy, hPaintDC, 0, 0, SRCCOPY);
 		::SelectObject(hCloneDC, hOldBitmap);
 		::DeleteDC(hCloneDC);
 		::GdiFlush();
@@ -204,9 +218,24 @@ void CPiDataSource::GeneralPic()
 	::SelectObject(hPaintDC, hOldPaintBitmap);
 	::DeleteObject(hPaintBitmap);
 	::DeleteDC(hPaintDC);
-
 	m_hDragBitmap = hBitmap;
 	
+}
+
+void CPiDataSource::GeneralPic(tcpchar szPath)
+{
+	HBITMAP hBitmap = CGDIPUtil::GetBitmapFromImage(szPath);
+	if (!hBitmap)
+	{
+		return;
+	}
+	if (m_hDragBitmap)
+	{
+		DeleteObject(m_hDragBitmap);
+		m_hDragBitmap = NULL;
+	}
+	m_hDragBitmap = hBitmap;
+	return;	
 }
 
 void CPiDataSource::SetWindow(HWND hWnd)
@@ -216,10 +245,17 @@ void CPiDataSource::SetWindow(HWND hWnd)
 		return;
 	}
 	m_hWnd = hWnd;
-	m_dc = ::GetDC(m_hWnd);
+	if (m_bClientPos)
+	{
+		m_dc = ::GetDC(m_hWnd);
+	}
+	else
+	{
+		m_dc = ::GetWindowDC(m_hWnd);
+	}
 }
 
-bool CPiDataSource::BeginDrag(tcpchar szPath)
+bool CPiDataSource::BeginDrag(tcpchar szPath, RECT rt)
 {
 	if (!CanDrag())
 	{
@@ -230,7 +266,7 @@ bool CPiDataSource::BeginDrag(tcpchar szPath)
 		OnFirstDrag();
 	}
 	
-	GeneralPic();
+	GeneralPic(rt);
 	bool bRet = Drag(szPath);
 
 	m_bBtnDown = false;
@@ -272,4 +308,14 @@ bool CPiDataSource::CanDrag()
 void CPiDataSource::CancelDrag()
 {
 	m_bBtnDown = false;
+}
+
+void CPiDataSource::SetClientPos(bool bClient)
+{
+	m_bClientPos = bClient;
+}
+
+void CPiDataSource::SetDragImage(HBITMAP hBitDrag)
+{
+	m_hDragBitmap = hBitDrag;
 }

@@ -72,6 +72,9 @@
 
 //ALTER_liwanliang:  at 2016/12/28 16:19
 #include "Nx\\PiDataSource.h"
+#include "..\..\wke\wkeWebView.h"
+#include "Chrome.h"
+#include "ClientRect.h"
 
 namespace WebCore {
 
@@ -858,6 +861,29 @@ void DragController::DragCustom(Element* element)
 {
 	OutputDebugString(_T("----drag image\n"));
 	CPiDataSource piSour;
+	
+	Frame* pFr = element->document()->frame();
+	Chrome* pChrome = (Chrome*)pFr->view()->hostWindow();
+	wke::CWebView* pView = (wke::CWebView*)pChrome->client()->webView();
+	HWND hWnd = pView->hostWindow();
+
+	HBITMAP hBitDrag = NULL;
+	/*{
+		pFr->document()->updateLayout();
+
+		pFr->view()->setPaintBehavior(PaintBehaviorSelectionOnly | (false ? PaintBehaviorForceBlackText : 0));
+		FloatRect fr = frame->selection()->bounds();
+		IntRect ir(static_cast<int>(fr.x()), static_cast<int>(fr.y()),
+			static_cast<int>(fr.width()), static_cast<int>(fr.height()));
+		HBITMAP image = imageFromRect(frame, ir);
+		frame->view()->setPaintBehavior(PaintBehaviorNormal);
+		hBitDrag;
+	}*/
+	//HBITMAP hBitDrag = WebCore::imageFromSelection(pFr, false);
+
+	//piSour.SetDragImage(hBitDrag);
+	piSour.SetClientPos(true);
+	piSour.SetWindow(hWnd);
 	piSour.PrepareDrag();
 
 	tstring strTempFile;
@@ -885,8 +911,10 @@ void DragController::DragCustom(Element* element)
 		if (!tempWriteSucceeded)
 			return ;
 	}
-	piSour.BeginDrag(strTempFile.c_str());
-	//piSour.BeginDrag(_T("e:\\work\\svn\\nc\\src\\“发帖子”韩文怎么写？_百度知道.htm"));
+	LayoutRect rt1 =  element->getRect();
+	piSour.GeneralPic(strTempFile.c_str());
+	piSour.Drag(strTempFile.c_str());
+	//piSour.BeginDrag(strTempFile.c_str(), rt1);
 	piSour.CancelDrag();
 }
 

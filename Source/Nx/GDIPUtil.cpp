@@ -107,3 +107,16 @@ void CGDIPUtil::ClipPic( LPCTSTR strPicSize, LPCTSTR strPicSrc )
 	bm.Save(strPicSrc, &pngClsid, NULL);
 	
 }
+
+HBITMAP CGDIPUtil::GetBitmapFromImage(tcpchar szPath)
+{	
+	Bitmap tempBmp(szPath);
+	if (tempBmp.GetLastStatus() != Ok)
+	{
+		return NULL;
+	}
+	Color   backColor;
+	HBITMAP   hBitmap = NULL;
+	tempBmp.GetHBITMAP(backColor, &hBitmap);
+	return hBitmap;
+}
