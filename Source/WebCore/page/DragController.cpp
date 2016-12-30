@@ -75,6 +75,8 @@
 #include "..\..\wke\wkeWebView.h"
 #include "Chrome.h"
 #include "ClientRect.h"
+#include "HTMLParserIdioms.h"
+#include <shlwapi.h>
 
 namespace WebCore {
 
@@ -859,7 +861,6 @@ void DragController::placeDragCaret(const IntPoint& windowPoint)
 
 void DragController::DragCustom(Element* element)
 {
-	OutputDebugString(_T("----drag image\n"));
 	CPiDataSource piSour;
 	
 	Frame* pFr = element->document()->frame();
@@ -879,9 +880,19 @@ void DragController::DragCustom(Element* element)
 		frame->view()->setPaintBehavior(PaintBehaviorNormal);
 		hBitDrag;
 	}*/
-	//HBITMAP hBitDrag = WebCore::imageFromSelection(pFr, false);
+	
+	tstring strName;
+	String strUrl = WebCore::stripLeadingAndTrailingHTMLSpaces(element->getAttribute(element->imageSourceAttributeName()));
+	strName.assign(strUrl.characters(), strUrl.length());
+	
+	//È¥µô½áÎ²Ð±¸Ü
+	::PathRemoveBackslash(&strName.at(0));
+	strName = ::PathFindFileName(strName.c_str());
+	if (strName.empty())
+	{
+		strName = _T("temp.jpg");
+	}
 
-	//piSour.SetDragImage(hBitDrag);
 	piSour.SetClientPos(true);
 	piSour.SetWindow(hWnd);
 	piSour.PrepareDrag();
@@ -893,7 +904,7 @@ void DragController::DragCustom(Element* element)
 		ExpandEnvironmentStrings(_T("%TEMP%"), szBuffer, MAX_PATH);
 		strTempFile = szBuffer;
 		strTempFile += _T("\\");
-		strTempFile += _T("temp.jpg");
+		strTempFile += strName;
 
 		Image* im = getImage(element);
 		SharedBuffer* imageBuffer = im->data();
