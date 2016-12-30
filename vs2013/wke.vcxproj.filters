@@ -19,16 +19,16 @@
     <ClCompile Include="..\Source\Nx\ExceptionHandler.cpp">
       <Filter>Nx</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Nx\DragDropImpl.cpp">
+    <ClCompile Include="..\Source\Nx\GDIPUtil.cpp">
       <Filter>Nx\sdk</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Nx\PiDataSource.cpp">
       <Filter>Nx\sdk</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Nx\GDIPUtil.cpp">
+    <ClCompile Include="..\Source\Nx\LogSystemDll.cpp">
       <Filter>Nx\sdk</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Nx\LogSystemDll.cpp">
+    <ClCompile Include="..\Source\Nx\PiDragDropImpl.cpp">
       <Filter>Nx\sdk</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,19 +50,19 @@
     <ClInclude Include="..\Source\Nx\ExceptionHandler.h">
       <Filter>Nx</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Nx\DragDropImpl.h">
-      <Filter>Nx\sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Nx\PiDataSource.h">
-      <Filter>Nx\sdk</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Nx\PiTypeDef.h">
       <Filter>Nx\sdk</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Nx\GDIPUtil.h">
       <Filter>Nx\sdk</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Nx\PiDataSource.h">
+      <Filter>Nx\sdk</Filter>
+    </ClInclude>
     <ClInclude Include="..\Source\Nx\LogSystemDll.h">
+      <Filter>Nx\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Nx\PiDragDropImpl.h">
       <Filter>Nx\sdk</Filter>
     </ClInclude>
   </ItemGroup>

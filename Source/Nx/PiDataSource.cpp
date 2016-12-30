@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "PiDataSource.h"
-#include "DragDropImpl.h"
+#include "PiDragDropImpl.h"
 #include <string>
 #include <gdiplus.h>
 #include <assert.h> 
@@ -45,12 +45,12 @@ bool CPiDataSource::Drag(tcpchar szPath)
 		return false;
 	}
 
-	CIDropSource* pdsrc = new CIDropSource;
+	CPiIDropSource* pdsrc = new CPiIDropSource;
 	if (pdsrc == NULL) return 0;
 	pdsrc->AddRef();
 
 
-	CIDataObject* pdobj = new CIDataObject(pdsrc);
+	CPiIDataObject* pdobj = new CPiIDataObject(pdsrc);
 	if (pdobj == NULL) return 0;
 	pdobj->AddRef();
 
@@ -122,7 +122,7 @@ bool CPiDataSource::Drag(tcpchar szPath)
 
 	//HBITMAP hBitmap = (HBITMAP)OleDuplicateData(m_hDragBitmap, fmtetc.cfFormat, NULL);
 	HBITMAP hBitmap = m_hDragBitmap;
-	if (m_dc && hBitmap)
+	if (hBitmap)
 	{
 		//medium.hBitmap = hBitmap;
 		//medium.hBitmap = m_hDragBitmap;
@@ -152,7 +152,7 @@ bool CPiDataSource::Drag(tcpchar szPath)
 
 
 	DWORD dwEffect; 
-	HRESULT hr = ::DoDragDrop(pdobj, pdsrc, DROPEFFECT_COPY | DROPEFFECT_MOVE, &dwEffect);
+	HRESULT hr = ::DoDragDrop(pdobj, pdsrc, DROPEFFECT_COPY /*| DROPEFFECT_MOVE*/, &dwEffect);
 	pdsrc->Release();
 	pdobj->Release();
 	::DeleteObject(m_hDragBitmap);

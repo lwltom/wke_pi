@@ -863,7 +863,6 @@ void DragController::placeDragCaret(const IntPoint& windowPoint)
 void DragController::DragCustom(Element* element)
 {
 	LogSystem::WriteLogToFileMsgFormat(LogSystem::LOG_NORMAL, _T("Drag begin"));
-	CPiDataSource piSour;
 	
 	Frame* pFr = element->document()->frame();
 	Chrome* pChrome = (Chrome*)pFr->view()->hostWindow();
@@ -895,10 +894,6 @@ void DragController::DragCustom(Element* element)
 		strName = _T("temp.jpg");
 	}
 
-	piSour.SetClientPos(true);
-	piSour.SetWindow(hWnd);
-	piSour.PrepareDrag();
-
 	tstring strTempFile;
 	{
 		//没找到缓存路径， 先生成
@@ -924,10 +919,13 @@ void DragController::DragCustom(Element* element)
 		if (!tempWriteSucceeded)
 			return ;
 	}
-	LayoutRect rt1 =  element->getRect();
+	
+	CPiDataSource piSour;
+	piSour.SetWindow(hWnd);
+	piSour.PrepareDrag();
 	piSour.GeneralPic(strTempFile.c_str());
 	piSour.Drag(strTempFile.c_str());
-	//piSour.BeginDrag(strTempFile.c_str(), rt1);
+
 	piSour.CancelDrag();
 	LogSystem::WriteLogToFileMsgFormat(LogSystem::LOG_NORMAL, _T("Drag end"));
 }

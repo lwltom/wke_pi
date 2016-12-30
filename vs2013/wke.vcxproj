@@ -72,7 +72,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Source\Nx\DragDropImpl.cpp" />
+    <ClCompile Include="..\Source\Nx\PiDragDropImpl.cpp" />
     <ClCompile Include="..\Source\Nx\ExceptionHandler.cpp" />
     <ClCompile Include="..\Source\Nx\GDIPUtil.cpp" />
     <ClCompile Include="..\Source\Nx\LogSystemDll.cpp" />
@@ -94,7 +94,7 @@
     <ClCompile Include="..\wke\wkeWebWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Source\Nx\DragDropImpl.h" />
+    <ClInclude Include="..\Source\Nx\PiDragDropImpl.h" />
     <ClInclude Include="..\Source\Nx\ExceptionHandler.h" />
     <ClInclude Include="..\Source\Nx\GDIPUtil.h" />
     <ClInclude Include="..\Source\Nx\LogSystemDll.h" />

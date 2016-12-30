@@ -7768,12 +7768,6 @@
     <None Include="..\Source\WebCore\inspector\front-end\WelcomeView.js" />
     <None Include="..\Source\WebCore\inspector\front-end\WorkersSidebarPane.js" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="WebCoreGenerated.vcxproj">
-      <Project>{0a324352-b3b6-496c-9e5b-4c7e923e628b}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

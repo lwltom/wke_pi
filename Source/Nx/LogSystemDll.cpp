@@ -4,7 +4,6 @@
 #include "LogSystemDll.h"
 #include <tchar.h>
 #include <shlwapi.h>
-//#include "PathLight.h"
 using namespace std;
 
 
