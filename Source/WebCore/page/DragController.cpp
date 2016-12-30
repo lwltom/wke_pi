@@ -77,6 +77,7 @@
 #include "ClientRect.h"
 #include "HTMLParserIdioms.h"
 #include <shlwapi.h>
+#include "..\Nx\LogSystemDll.h"
 
 namespace WebCore {
 
@@ -861,6 +862,7 @@ void DragController::placeDragCaret(const IntPoint& windowPoint)
 
 void DragController::DragCustom(Element* element)
 {
+	LogSystem::WriteLogToFileMsgFormat(LogSystem::LOG_NORMAL, _T("Drag begin"));
 	CPiDataSource piSour;
 	
 	Frame* pFr = element->document()->frame();
@@ -927,6 +929,7 @@ void DragController::DragCustom(Element* element)
 	piSour.Drag(strTempFile.c_str());
 	//piSour.BeginDrag(strTempFile.c_str(), rt1);
 	piSour.CancelDrag();
+	LogSystem::WriteLogToFileMsgFormat(LogSystem::LOG_NORMAL, _T("Drag end"));
 }
 
 } // namespace WebCore

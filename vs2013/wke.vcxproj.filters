@@ -28,6 +28,9 @@
     <ClCompile Include="..\Source\Nx\GDIPUtil.cpp">
       <Filter>Nx\sdk</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Nx\LogSystemDll.cpp">
+      <Filter>Nx\sdk</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\wke\icuwin.h" />
@@ -57,6 +60,9 @@
       <Filter>Nx\sdk</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Nx\GDIPUtil.h">
+      <Filter>Nx\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Nx\LogSystemDll.h">
       <Filter>Nx\sdk</Filter>
     </ClInclude>
   </ItemGroup>

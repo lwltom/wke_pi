@@ -75,6 +75,7 @@
     <ClCompile Include="..\Source\Nx\DragDropImpl.cpp" />
     <ClCompile Include="..\Source\Nx\ExceptionHandler.cpp" />
     <ClCompile Include="..\Source\Nx\GDIPUtil.cpp" />
+    <ClCompile Include="..\Source\Nx\LogSystemDll.cpp" />
     <ClCompile Include="..\Source\Nx\PiDataSource.cpp" />
     <ClCompile Include="..\wke\icuwin.cpp" />
     <ClCompile Include="..\wke\jsBind.cpp" />
@@ -96,6 +97,7 @@
     <ClInclude Include="..\Source\Nx\DragDropImpl.h" />
     <ClInclude Include="..\Source\Nx\ExceptionHandler.h" />
     <ClInclude Include="..\Source\Nx\GDIPUtil.h" />
+    <ClInclude Include="..\Source\Nx\LogSystemDll.h" />
     <ClInclude Include="..\Source\Nx\PiDataSource.h" />
     <ClInclude Include="..\Source\Nx\PiTypeDef.h" />
     <ClInclude Include="..\wke\icuwin.h" />
