@@ -922,6 +922,7 @@ void DragController::DragCustom(Element* element)
 	
 	CPiDataSource piSour;
 	piSour.SetWindow(hWnd);
+	piSour.SetDragImageSize(200, 200);
 	piSour.PrepareDrag();
 	piSour.GeneralPic(strTempFile.c_str());
 	piSour.Drag(strTempFile.c_str());

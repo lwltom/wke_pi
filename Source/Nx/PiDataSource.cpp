@@ -5,13 +5,16 @@
 #include <gdiplus.h>
 #include <assert.h> 
 #include "GDIPUtil.h"
+#include "Math/PiMathUnit.h"
 #pragma comment(lib, "GdiPlus.lib")
 
 using std::string;
 using std::wstring;
 
+Pi_NameSpace_Using
 
 CPiDataSource::CPiDataSource()
+	:m_szDragImg({ 0, 0 })
 {
 	m_hWnd			= NULL;
 	m_dc			= NULL;
@@ -167,13 +170,18 @@ void CPiDataSource::GeneralPic(RECT rtPic)
 	{
 		return;
 	}
-	SIZE szPic = { rtPic.right - rtPic.left, rtPic.bottom - rtPic.top };
-	//RECT rc = {0, 0, 100, 100};
-	int cx = szPic.cx;
-	int cy = szPic.cy;
+	
+	SIZE szSrc = { rtPic.right - rtPic.left, rtPic.bottom - rtPic.top };
+
+	if (m_szDragImg.cx == 0 || m_szDragImg.cy == 0)
+	{
+		m_szDragImg = szSrc;
+	}
+	SIZE szDist = GetDragImgDistSize(szSrc);
+	//SIZE szDist = CPiMath::GetKeepRadio(SIZE{ szSrc.cx, szSrc.cy }, m_szDragImg);
 
 	HDC hPaintDC = ::CreateCompatibleDC(m_dc);
-	HBITMAP hPaintBitmap = ::CreateCompatibleBitmap(m_dc, cx, cy);
+	HBITMAP hPaintBitmap = ::CreateCompatibleBitmap(m_dc, szDist.cx, szDist.cy);
 	assert(hPaintDC);
 	assert(hPaintBitmap);
 	HBITMAP hOldPaintBitmap = (HBITMAP) ::SelectObject(hPaintDC, hPaintBitmap);
@@ -187,28 +195,27 @@ void CPiDataSource::GeneralPic(RECT rtPic)
 
 	}
 
-	{
-		//获取dc里指定区域的图片
-		::BitBlt(hPaintDC, 0, 0, rtPic.right - rtPic.left, rtPic.bottom - rtPic.top, m_dc, rtPic.left, rtPic.top, SRCCOPY);
+	::StretchBlt(hPaintDC, 0, 0, szDist.cx, szDist.cy, m_dc, rtPic.left, rtPic.top, szSrc.cx, szSrc.cy, SRCCOPY);
 
-	}
 	BITMAPINFO bmi = { 0 };
 	bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-	bmi.bmiHeader.biWidth = cx;
-	bmi.bmiHeader.biHeight = cy;
+	bmi.bmiHeader.biWidth = szDist.cx;
+	bmi.bmiHeader.biHeight = szDist.cy;
 	bmi.bmiHeader.biPlanes = 1;
 	bmi.bmiHeader.biBitCount = 32;
 	bmi.bmiHeader.biCompression = BI_RGB;
-	bmi.bmiHeader.biSizeImage = cx * cy * sizeof(DWORD);
+	bmi.bmiHeader.biSizeImage = szDist.cx * szDist.cy * sizeof(DWORD);
 	LPDWORD pDest = NULL;
 	HDC hCloneDC = ::CreateCompatibleDC(m_dc);
 	HBITMAP hBitmap = ::CreateDIBSection(m_dc, &bmi, DIB_RGB_COLORS, (LPVOID*)&pDest, NULL, 0);
-	assert(hCloneDC);
-	assert(hBitmap);
+	if (!hCloneDC || !hBitmap)
+	{
+		return;
+	}
 	if (hBitmap != NULL)
 	{
 		HBITMAP hOldBitmap = (HBITMAP) ::SelectObject(hCloneDC, hBitmap);
-		::BitBlt(hCloneDC, 0, 0, cx, cy, hPaintDC, 0, 0, SRCCOPY);
+		::BitBlt(hCloneDC, 0, 0, szDist.cx, szDist.cy, hPaintDC, 0, 0, SRCCOPY);
 		::SelectObject(hCloneDC, hOldBitmap);
 		::DeleteDC(hCloneDC);
 		::GdiFlush();
@@ -218,13 +225,27 @@ void CPiDataSource::GeneralPic(RECT rtPic)
 	::SelectObject(hPaintDC, hOldPaintBitmap);
 	::DeleteObject(hPaintBitmap);
 	::DeleteDC(hPaintDC);
+
+	if (m_hDragBitmap)
+	{
+		DeleteObject(m_hDragBitmap);
+		m_hDragBitmap = NULL;
+	}
 	m_hDragBitmap = hBitmap;
 	
 }
 
 void CPiDataSource::GeneralPic(tcpchar szPath)
 {
-	HBITMAP hBitmap = CGDIPUtil::GetBitmapFromImage(szPath);
+	Gdiplus::Bitmap tempBmp(szPath);
+	if (tempBmp.GetLastStatus() != Gdiplus::Ok
+		|| tempBmp.GetHeight() == 0
+		|| tempBmp.GetWidth() == 0)
+	{
+		return ;
+	}
+	SIZE szDist = GetDragImgDistSize(SIZE{ tempBmp.GetWidth(), tempBmp.GetHeight() });
+	HBITMAP hBitmap = CGDIPUtil::GetBitmapFromImage(szPath, szDist);
 	if (!hBitmap)
 	{
 		return;
@@ -269,7 +290,25 @@ bool CPiDataSource::BeginDrag(tcpchar szPath, RECT rt)
 	GeneralPic(rt);
 	bool bRet = Drag(szPath);
 
-	m_bBtnDown = false;
+	CancelDrag();
+	return true;
+}
+
+bool CPiDataSource::BeginDrag(tcpchar szPath)
+{
+	if (!CanDrag())
+	{
+		return false;
+	}
+	if (IsFrstDrag())
+	{
+		OnFirstDrag();
+	}
+
+	GeneralPic(szPath);
+	bool bRet = Drag(szPath);
+
+	CancelDrag();
 	return true;
 }
 
@@ -318,4 +357,23 @@ void CPiDataSource::SetClientPos(bool bClient)
 void CPiDataSource::SetDragImage(HBITMAP hBitDrag)
 {
 	m_hDragBitmap = hBitDrag;
+}
+
+void CPiDataSource::SetDragImageSize(int cx, int cy)
+{
+	m_szDragImg.cx = cx;
+	m_szDragImg.cy = cy;
+}
+
+SIZE CPiDataSource::GetDragImgDistSize(const SIZE& szSrc)
+{
+	SIZE szDist = szSrc;
+	if (szDist.cx <= m_szDragImg.cx
+		&& szDist.cy <= m_szDragImg.cy)
+	{
+		return szDist;
+	}
+
+	szDist = CPiMath::GetKeepRadio(szSrc, m_szDragImg);
+	return szDist;
 }

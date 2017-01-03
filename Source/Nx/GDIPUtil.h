@@ -18,5 +18,5 @@ public:
 	
 	static int GetEncoderClsid( const WCHAR* format, CLSID* pClsid );
 	static void ClipPic( LPCTSTR strPicSize, LPCTSTR strPicSrc );
-	static HBITMAP GetBitmapFromImage(tcpchar szPath);
+	static HBITMAP GetBitmapFromImage(tcpchar szPath, SIZE szPicSize = { 0 });
 };

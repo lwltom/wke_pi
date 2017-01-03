@@ -31,6 +31,9 @@
     <ClCompile Include="..\Source\Nx\PiDragDropImpl.cpp">
       <Filter>Nx\sdk</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Nx\Math\PiMathUnit.cpp">
+      <Filter>Nx\sdk</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\wke\icuwin.h" />
@@ -63,6 +66,9 @@
       <Filter>Nx\sdk</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Nx\PiDragDropImpl.h">
+      <Filter>Nx\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Nx\Math\PiMathUnit.h">
       <Filter>Nx\sdk</Filter>
     </ClInclude>
   </ItemGroup>

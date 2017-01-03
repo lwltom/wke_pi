@@ -48,11 +48,11 @@
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release_Cairo_CFLite|Win32'" />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Cairo_CFLite|Win32'">
-    <IncludePath>$(ProjectDir)..\Source\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\Source\;$(ProjectDir)..\Source\Nx\;$(IncludePath)</IncludePath>
     <OutDir>..\..\nc\output\Bin_Debug\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Cairo_CFLite|Win32'">
-    <IncludePath>$(ProjectDir)..\Source\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\Source\;$(ProjectDir)..\Source\Nx;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Cairo_CFLite|Win32'">
     <ClCompile>
@@ -72,6 +72,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source\Nx\Math\PiMathUnit.cpp" />
     <ClCompile Include="..\Source\Nx\PiDragDropImpl.cpp" />
     <ClCompile Include="..\Source\Nx\ExceptionHandler.cpp" />
     <ClCompile Include="..\Source\Nx\GDIPUtil.cpp" />
@@ -94,6 +95,7 @@
     <ClCompile Include="..\wke\wkeWebWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Source\Nx\Math\PiMathUnit.h" />
     <ClInclude Include="..\Source\Nx\PiDragDropImpl.h" />
     <ClInclude Include="..\Source\Nx\ExceptionHandler.h" />
     <ClInclude Include="..\Source\Nx\GDIPUtil.h" />
