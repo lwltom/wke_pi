@@ -736,6 +736,10 @@ bool DragController::startDrag(Frame* src, const DragState& state, DragOperation
         // This is an early detection for problems encountered later upon drop.
         ASSERT(!image->filenameExtension().isEmpty());
         Element* element = static_cast<Element*>(node);
+		//ALTER_liwanliang:  at 2017/01/17 14:49
+		/************************************************************************
+				添加拖拽图片出来的功能
+		************************************************************************/
 		DragCustom(element);
 
         if (!clipboard->hasData()) {
@@ -896,13 +900,16 @@ void DragController::DragCustom(Element* element)
 
 	tstring strTempFile;
 	{
-		//没找到缓存路径， 先生成
+		
+		//没找到图片的缓存路径， 先生成到临时目录
 		TCHAR szBuffer[MAX_PATH];
 		ExpandEnvironmentStrings(_T("%TEMP%"), szBuffer, MAX_PATH);
 		strTempFile = szBuffer;
 		strTempFile += _T("\\");
 		strTempFile += strName;
-
+		/************************************************************************
+			获取当前即将拖动图片的数据
+		************************************************************************/
 		Image* im = getImage(element);
 		SharedBuffer* imageBuffer = im->data();
 		if (!imageBuffer || !imageBuffer->size())

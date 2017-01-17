@@ -536,6 +536,8 @@ namespace wke
                 dst += pitch;
             }
         }
+		//ALTER_liwanliang:  at 2017/01/17 15:15
+		//Ôö¼Ótooltip
 		ChromeClient* client = (ChromeClient*)page()->chrome()->client();
 		client->paintPopupMenu(bits, pitch);
 		client->paintToolTip(bits, pitch);

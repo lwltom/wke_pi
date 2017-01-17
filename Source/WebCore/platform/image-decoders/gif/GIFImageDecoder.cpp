@@ -65,7 +65,8 @@ bool GIFImageDecoder::isSizeAvailable()
 
 bool GIFImageDecoder::setSize(unsigned width, unsigned height)
 {
-	//todo alter by liwanliang
+	//ALTER_liwanliang:  at 2017/01/17 14:55
+	//gif太大时容易消耗大量内存， 导致崩溃，  限制单张gif的宽和高尺寸
 	int nMax = 2000;
 	if (width > nMax || height > nMax)
 	{

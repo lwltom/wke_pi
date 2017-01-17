@@ -483,6 +483,8 @@ wkeJSValue wkeRunJS(wkeWebView* webView, const utf8* script)
 
 wkeJSValue wkeRunJSW(wkeWebView* webView, const wchar_t* script)
 {
+	//ALTER_liwanliang:  at 2017/01/17 15:13
+	//调用扩展的接口， 支持判断js执行失败和执行成功没返回值的情况
     //return webView->runJS(script);
 	return webView->runJSReturn(script);
 }
