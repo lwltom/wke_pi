@@ -68,16 +68,10 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Source\Nx\Math\PiMathUnit.cpp" />
-    <ClCompile Include="..\Source\Nx\PiDragDropImpl.cpp" />
-    <ClCompile Include="..\Source\Nx\ExceptionHandler.cpp" />
-    <ClCompile Include="..\Source\Nx\GDIPUtil.cpp" />
-    <ClCompile Include="..\Source\Nx\LogSystemDll.cpp" />
-    <ClCompile Include="..\Source\Nx\PiDataSource.cpp" />
     <ClCompile Include="..\wke\icuwin.cpp" />
     <ClCompile Include="..\wke\jsBind.cpp" />
     <ClCompile Include="..\wke\wke.cpp" />
@@ -95,13 +89,6 @@
     <ClCompile Include="..\wke\wkeWebWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Source\Nx\Math\PiMathUnit.h" />
-    <ClInclude Include="..\Source\Nx\PiDragDropImpl.h" />
-    <ClInclude Include="..\Source\Nx\ExceptionHandler.h" />
-    <ClInclude Include="..\Source\Nx\GDIPUtil.h" />
-    <ClInclude Include="..\Source\Nx\LogSystemDll.h" />
-    <ClInclude Include="..\Source\Nx\PiDataSource.h" />
-    <ClInclude Include="..\Source\Nx\PiTypeDef.h" />
     <ClInclude Include="..\wke\icuwin.h" />
     <ClInclude Include="..\wke\wke.h" />
     <ClInclude Include="..\wke\wkeChromeClient.h" />

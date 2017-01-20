@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "config.h"
 #include "GDIPUtil.h"
 #include <GdiPlus.h>
 #include "Math/PiMathUnit.h"

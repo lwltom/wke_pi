@@ -1,4 +1,7 @@
+#include "StdAfx.h"
+#include "config.h"
 #include "ExceptionHandler.h"
+#include "config.h"
 #include <eh.h> 
 #include <signal.h>
 #include <sstream>

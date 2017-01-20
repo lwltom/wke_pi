@@ -1,6 +1,6 @@
 #pragma once
-#include   <limits>
-#include "PiTypeDef.h"
+#include <limits>
+#include "../PiTypeDef.h"
 #include <wtypes.h>
 
 Pi_NameSpace_Begin

@@ -48,7 +48,7 @@
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release_Cairo_CFLite|Win32'" />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Cairo_CFLite|Win32'">
-    <IncludePath>$(ProjectDir)..\Source\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\Source\;$(ProjectDir)..\Source\Nx\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Cairo_CFLite|Win32'">
     <IncludePath>$(ProjectDir)..\Source\;$(IncludePath)</IncludePath>
@@ -75,6 +75,12 @@
     </ClCompile>
     <ClCompile Include="$(ConfigurationBuildDir)\obj\$(ProjectName)\DerivedSources\CSSPropertyNames.cpp" />
     <ClCompile Include="$(ConfigurationBuildDir)\obj\$(ProjectName)\DerivedSources\CSSValueKeywords.cpp" />
+    <ClCompile Include="..\Source\Nx\ExceptionHandler.cpp" />
+    <ClCompile Include="..\Source\Nx\GDIPUtil.cpp" />
+    <ClCompile Include="..\Source\Nx\LogSystemDll.cpp" />
+    <ClCompile Include="..\Source\Nx\Math\PiMathUnit.cpp" />
+    <ClCompile Include="..\Source\Nx\PiDataSource.cpp" />
+    <ClCompile Include="..\Source\Nx\PiDragDropImpl.cpp" />
     <ClCompile Include="..\Source\WebCore\DerivedSources.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug_Cairo_CFLite|Win32'">
       </PrecompiledHeader>
@@ -5670,6 +5676,13 @@
     <ClInclude Include="$(ConfigurationBuildDir)\obj\$(ProjectName)\DerivedSources\XMLViewerCSS.h" />
     <ClInclude Include="$(ConfigurationBuildDir)\obj\$(ProjectName)\DerivedSources\XMLViewerJS.h" />
     <ClInclude Include="$(ConfigurationBuildDir)\obj\$(ProjectName)\DerivedSources\XPathGrammar.h" />
+    <ClInclude Include="..\Source\Nx\ExceptionHandler.h" />
+    <ClInclude Include="..\Source\Nx\GDIPUtil.h" />
+    <ClInclude Include="..\Source\Nx\LogSystemDll.h" />
+    <ClInclude Include="..\Source\Nx\Math\PiMathUnit.h" />
+    <ClInclude Include="..\Source\Nx\PiDataSource.h" />
+    <ClInclude Include="..\Source\Nx\PiDragDropImpl.h" />
+    <ClInclude Include="..\Source\Nx\PiTypeDef.h" />
     <ClInclude Include="..\Source\WebCore\accessibility\AccessibilityARIAGrid.h" />
     <ClInclude Include="..\Source\WebCore\accessibility\AccessibilityARIAGridCell.h" />
     <ClInclude Include="..\Source\WebCore\accessibility\AccessibilityARIAGridRow.h" />

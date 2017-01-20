@@ -265,6 +265,12 @@
     <Filter Include="websockets">
       <UniqueIdentifier>{2f59c351-679c-416a-a2a7-748a6a04fbbf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Nx">
+      <UniqueIdentifier>{ab215f55-d7e6-45ad-a5e0-b95b0db19bf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nx\sdk">
+      <UniqueIdentifier>{6b348565-86dc-47e4-abdd-3b63ce92a982}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(ConfigurationBuildDir)\obj\$(ProjectName)\DerivedSources\ColorData.cpp">
@@ -6134,6 +6140,24 @@
     </ClCompile>
     <ClCompile Include="..\Source\WebCore\page\FrameActionScheduler.cpp" />
     <ClCompile Include="$(ConfigurationBuildDir)\obj\$(ProjectName)\DerivedSources\JSIDBCursor.h" />
+    <ClCompile Include="..\Source\Nx\ExceptionHandler.cpp">
+      <Filter>Nx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Nx\Math\PiMathUnit.cpp">
+      <Filter>Nx\sdk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Nx\PiDragDropImpl.cpp">
+      <Filter>Nx\sdk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Nx\GDIPUtil.cpp">
+      <Filter>Nx\sdk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Nx\LogSystemDll.cpp">
+      <Filter>Nx\sdk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Nx\PiDataSource.cpp">
+      <Filter>Nx\sdk</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(ConfigurationBuildDir)\obj\$(ProjectName)\DerivedSources\CSSGrammar.h">
@@ -12999,6 +13023,27 @@
     </ClInclude>
     <ClInclude Include="..\Source\WebCore\config.h" />
     <ClInclude Include="..\Source\WebCore\page\FrameActionScheduler.h" />
+    <ClInclude Include="..\Source\Nx\ExceptionHandler.h">
+      <Filter>Nx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Nx\Math\PiMathUnit.h">
+      <Filter>Nx\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Nx\PiDragDropImpl.h">
+      <Filter>Nx\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Nx\GDIPUtil.h">
+      <Filter>Nx\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Nx\LogSystemDll.h">
+      <Filter>Nx\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Nx\PiDataSource.h">
+      <Filter>Nx\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Nx\PiTypeDef.h">
+      <Filter>Nx\sdk</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\WebCore\css\CSSGrammar.y">

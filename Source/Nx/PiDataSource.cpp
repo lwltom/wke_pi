@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "config.h"
 #include "PiDataSource.h"
 #include "PiDragDropImpl.h"
 #include <string>

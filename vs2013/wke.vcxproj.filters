@@ -16,24 +16,6 @@
     <ClCompile Include="..\wke\wkeString.cpp" />
     <ClCompile Include="..\wke\wkeWebView.cpp" />
     <ClCompile Include="..\wke\wkeWebWindow.cpp" />
-    <ClCompile Include="..\Source\Nx\ExceptionHandler.cpp">
-      <Filter>Nx</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Nx\GDIPUtil.cpp">
-      <Filter>Nx\sdk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Nx\PiDataSource.cpp">
-      <Filter>Nx\sdk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Nx\LogSystemDll.cpp">
-      <Filter>Nx\sdk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Nx\PiDragDropImpl.cpp">
-      <Filter>Nx\sdk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Nx\Math\PiMathUnit.cpp">
-      <Filter>Nx\sdk</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\wke\icuwin.h" />
@@ -50,37 +32,8 @@
     <ClInclude Include="..\wke\wkeString.h" />
     <ClInclude Include="..\wke\wkeWebView.h" />
     <ClInclude Include="..\wke\wkeWebWindow.h" />
-    <ClInclude Include="..\Source\Nx\ExceptionHandler.h">
-      <Filter>Nx</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Nx\PiTypeDef.h">
-      <Filter>Nx\sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Nx\GDIPUtil.h">
-      <Filter>Nx\sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Nx\PiDataSource.h">
-      <Filter>Nx\sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Nx\LogSystemDll.h">
-      <Filter>Nx\sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Nx\PiDragDropImpl.h">
-      <Filter>Nx\sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Nx\Math\PiMathUnit.h">
-      <Filter>Nx\sdk</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\wke\wke.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="Nx">
-      <UniqueIdentifier>{dc211d8e-75ad-44f6-b00e-8286e006f500}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Nx\sdk">
-      <UniqueIdentifier>{b0017f2f-0dab-47e5-bf0b-52d642d168aa}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
 </Project>
